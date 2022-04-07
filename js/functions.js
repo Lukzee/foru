@@ -92,26 +92,23 @@ function startHeartAnimation() {
 	};
 })(jQuery);
 
-function timeElapse(date){
-	var current = Date();
-	var seconds = (Date.parse(current) - Date.parse(date)) / 1000;
-	var days = Math.floor(seconds / (3600 * 24));
-	seconds = seconds % (3600 * 24);
-	var hours = Math.floor(seconds / 3600);
-	if (hours < 10) {
-		hours = "0" + hours;
-	}
-	seconds = seconds % 3600;
-	var minutes = Math.floor(seconds / 60);
-	if (minutes < 10) {
-		minutes = "0" + minutes;
-	}
-	seconds = seconds % 60;
-	if (seconds < 10) {
-		seconds = "0" + seconds;
-	}
-	var result = "<span class=\"digit\">" + days + "</span> days <span class=\"digit\">" + hours + "</span> hours <span class=\"digit\">" + minutes + "</span> minutes <span class=\"digit\">" + seconds + "</span> seconds"; 
-	$("#elapseClock").html(result);
+function secondsToDhms(myd) {
+	var date = new Date(myd).getTime();
+	var date2 = new Date().getTime();
+	var mdate = date2 - date;
+	var seconds = Number(mdate/1000);
+
+	var d = Math.floor(seconds / (3600*24));
+	var h = Math.floor(seconds % (3600*24) / 3600);
+	var m = Math.floor(seconds % 3600 / 60);
+	var s = Math.floor(seconds % 60);
+
+	var dDisplay = d > 0 ? d + (d == 1 ? " <small>day</small>, " : " <small>days</small>, ") : "";
+	var hDisplay = h > 0 ? h + (h == 1 ? " <small>hour</small>, " : " <small>hours</small>, ") : "";
+	var mDisplay = m > 0 ? m + (m == 1 ? " <small>minute</small>, " : " <small>minutes</small>, ") : "";
+	var sDisplay = s > 0 ? s + (s == 1 ? " <small>second</small>" : " <small>seconds</small>") : "";
+
+	$('#elapseClock').html('<span class="digit">' + dDisplay + hDisplay + mDisplay + sDisplay + '</span>');
 }
 
 function showMessages() {
